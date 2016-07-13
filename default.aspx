@@ -14,7 +14,7 @@
             {
                 System.Reflection.MethodInfo displayName = type.GetMethod("GetDisplayName", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
                 if (displayName != null)
-                    dvVersion.InnerHtml = "Current application running on <b>" + displayName.Invoke(null, null) + "</b>";
+                    dvVersion.InnerHtml = "Current application running on Mono <b>" + displayName.Invoke(null, null) + "</b>";
             }
             else
             {
@@ -46,6 +46,7 @@
                     <p id="dvVersion" runat="server" />
 
                     <h2>Application Environment Variables</h2>
+                    <b>NOTE: Environment variables may include secure content. Do not expose all your environment variables.</b>
                     <p id="dvEnvironmentVaraiable" runat="server">
                     </p>
 
