@@ -48,6 +48,7 @@
                     <h2>Application Environment Variables</h2>
                     <b>NOTE: Environment variables may include secure content. Do not expose all your environment variables.</b>
                     <br/>
+                    <br/>
                     <p id="dvEnvironmentVaraiable" runat="server">
                     </p>
 
