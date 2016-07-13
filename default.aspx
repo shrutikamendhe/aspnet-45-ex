@@ -6,17 +6,26 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <link href="main.css" rel="stylesheet" />
     <script language="c#" runat="server">
+
         public void Page_Load(object sender, EventArgs e)
         {
-            var targetFw = System.Reflection.Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(System.Runtime.Versioning.TargetFrameworkAttribute), false);
-            string framworkName = ((System.Runtime.Versioning.TargetFrameworkAttribute)targetFw[0]).FrameworkName;
-            dvVersion.InnerHtml = "Current application running on <b>" + framworkName + "</b>";
+            Type type = Type.GetType("Mono.Runtime");
+            if (type != null)
+            {
+                System.Reflection.MethodInfo displayName = type.GetMethod("GetDisplayName", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Static);
+                if (displayName != null)
+                    dvVersion.InnerHtml = "Current application running on <b>" + displayName.Invoke(null, null) + "</b>";
+            }
+            else
+            {
+                var targetFw = System.Reflection.Assembly.GetExecutingAssembly().GetCustomAttributes(typeof(System.Runtime.Versioning.TargetFrameworkAttribute), false);
+                string framworkName = ((System.Runtime.Versioning.TargetFrameworkAttribute)targetFw[0]).FrameworkName;
+                dvVersion.InnerHtml = "Current application running on <b>" + framworkName + "</b>";
+            }
 
             dvEnvironmentVaraiable.InnerHtml = string.Empty;
             foreach (DictionaryEntry de in Environment.GetEnvironmentVariables())
-            {
                 dvEnvironmentVaraiable.InnerHtml += string.Format("{0} = {1}<br/>", de.Key.ToString().Trim(), de.Value.ToString().Trim());
-            }
         }
     </script>
 </head>
